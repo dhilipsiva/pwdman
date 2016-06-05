@@ -13,7 +13,7 @@ Date created: 2016-06-04
 FUinDq}3OsJouxX0r*YWVT1zK#2kj6~:.Rp,L_Ic]EdHB@5Cy{$>S;)h%N?^+mMw8a[vP=4<g|fQZt(
 """
 
-from md5 import md5
+from hashlib import md5
 from itertools import cycle
 
 NUMBERS = list("0123456789")
@@ -23,6 +23,7 @@ SYMBOLS = list("~@#$%^&*()_+{|}:<>?-=[];,.")
 
 
 def _get_numerical_digest(text):
+    text = text.encode()
     hex_digest = md5(text).hexdigest()
     list_digest = list(hex_digest)
 
@@ -37,7 +38,7 @@ class PwdMan(object):
             self, pass_phrase, length=25, numbers=True, lowers=True,
             uppers=True, symbols=True):
 
-        self.true_count = locals().values().count(True)
+        self.true_count = list(locals().values()).count(True)
         self.min_count = int(length/self.true_count)
         self.allowed = []
         self.pwd = ""
@@ -104,6 +105,3 @@ class PwdMan(object):
         self.shuffle_password()
 
         return self.pwd
-
-pm = PwdMan("test123")
-print(pm.generate_password("twitter"))
