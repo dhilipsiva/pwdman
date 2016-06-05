@@ -21,10 +21,11 @@ setup(
     include_package_data=True,
     install_requires=[
         'Click',
-        'pyaes',
+        'pycrypto',
     ],
     entry_points='''
         [console_scripts]
         pwdman=pwdman.cli:cli
+        pwdman-setup=pwdman.cli:setup
     ''',
 )

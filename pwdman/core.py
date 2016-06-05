@@ -10,7 +10,6 @@
 File name: core.py
 Author: dhilipsiva <dhilipsiva@gmail.com>
 Date created: 2016-06-04
-FUinDq}3OsJouxX0r*YWVT1zK#2kj6~:.Rp,L_Ic]EdHB@5Cy{$>S;)h%N?^+mMw8a[vP=4<g|fQZt(
 """
 
 from hashlib import md5
@@ -19,7 +18,7 @@ from itertools import cycle
 NUMBERS = list("0123456789")
 LETTERS_LOWER = list("abcdefghijklmnopqrstuvwxyz")
 LETTERS_UPPER = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-SYMBOLS = list("~@#$%^&*()_+{|}:<>?-=[];,.")
+SYMBOLS = list("~@#^&*()_+{|}:<>?-[];,.")
 
 
 def _get_numerical_digest(text):
@@ -35,14 +34,14 @@ def _get_numerical_digest(text):
 
 class PwdMan(object):
     def __init__(
-            self, pass_phrase, length=25, numbers=True, lowers=True,
+            self, passphrase, length=25, numbers=True, lowers=True,
             uppers=True, symbols=True):
 
         self.true_count = list(locals().values()).count(True)
         self.min_count = int(length/self.true_count)
         self.allowed = []
         self.pwd = ""
-        self.pass_phrase = pass_phrase
+        self.passphrase = passphrase
         self.length = length
         self.numbers = numbers
         self.lowers = lowers
@@ -52,12 +51,7 @@ class PwdMan(object):
     def password_segment(self, allowed, length=None):
         self.allowed += allowed
         length = length or self.min_count
-
-        # Squaring `length` because - it seemed to be giving more random stuff
-        # I do not have data to backup this claim.
-        # I am just more happy with results this way!
-        text = self.pass_phrase + self.service + str(length) \
-            + "".join(allowed)
+        text = self.passphrase + self.service + str(length) + "".join(allowed)
         numerical_digest = _get_numerical_digest(text)
         cycler_digest = cycle(numerical_digest)
         cycler_allowed = cycle(allowed)
