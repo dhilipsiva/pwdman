@@ -12,6 +12,8 @@ Author: dhilipsiva <dhilipsiva@gmail.com>
 Date created: 2016-06-05
 """
 
+from __future__ import print_function
+
 import click
 from json import dumps, loads
 from hashlib import md5
@@ -26,7 +28,7 @@ Setup Done!
 Please add these dollowing lines in your `.bashrc` or `.bash_profile`
 
 export PWDMAN_SALT=%(salt)s
-expoer PWDMAN_PATH=%(path)s
+export PWDMAN_PATH=%(path)s
 
 Be sure to open a new terminal - to load new ENV variables.
 
@@ -103,7 +105,7 @@ def cli(service, salt, path, length, numbers, lowers, uppers, symbols):
     kwargs = get_kwargs(
         config, service, length, numbers, lowers, uppers, symbols)
     pm = PwdMan(**kwargs)
-    print(pm.generate_password(service))
+    print(pm.generate_password(service), end="")
     config["services"][service] = kwargs
     save_config(salt, path, config)
 
